@@ -1,53 +1,99 @@
-//Progression 1 - create a Manager array and return it
-let managerName = "Alex Ferguson";
-let managerAge = 78;
-let currentTeam = "Manchester FC";
-let trophiesWon = 27;
-
-//Write your function here
-
-// Don't edit the following code
-try {
-  var manager = createManager(
-    managerName,
-    managerAge,
-    currentTeam,
-    trophiesWon
-  );
-} catch (e) {
-  // do nothing - expected error
+// Progression 1
+function createManager(managerName, managerAge, currentTeam, trophiesWon) {
+  return [{ name: managerName, age: managerAge, team: currentTeam, trophies: trophiesWon }];
 }
 
-//Progression 2 - create a formation object and return it
-var formation = [4, 4, 3];
-
-//write your function here
-
-// Dont edit the following code
-
-try {
-  var formationObject = createFormation(formation);
-} catch (e) {
-  //do nothing
+function createManager(managerName, managerAge, currentTeam, trophiesWon) {
+  return [{ name: managerName, age: managerAge, team: currentTeam, trophies: trophiesWon }];
 }
 
-//Progression 3 - Filter players that debuted in ___ year
+function createManager(managerName, managerAge, currentTeam, trophiesWon) {
+  return [managerName, managerAge, currentTeam, trophiesWon];
+}
 
-//Progression 4 - Filter players that play at the position _______
+// Progression 2
+function createFormation(formation) {
+  return {
+    defender: formation[0] || 0,
+    midfield: formation[1] || 0,
+    forward: formation[2] || 0,
+  };
+}
 
-//Progression 5 - Filter players that have won ______ award
+// Progression 3
+function filterByDebut(year) {
+  return players.filter(player => player.debut === year);
+}
 
-//Progression 6 - Filter players that won ______ award ____ times
+// Progression 4
+function filterByPosition(position) {
+  return players.filter(player => player.position === position);
+}
 
-//Progression 7 - Filter players that won ______ award and belong to ______ country
+// Progression 5
+function filterByAward(awardName) {
+  return players.filter(player => player.awards.some(award => award.name === awardName));
+}
 
-//Progression 8 - Filter players that won atleast ______ awards, belong to ______ team and are younger than ____
+function createFormation(formation) {
+  return {
+    defender: formation[0],
+    midfield: formation[1],
+    forward: formation[2],
+  };
+}
 
-//Progression 9 - Sort players in descending order of their age
+// Progression 6
+function filterByAwardxTimes(awardName, noOfTimes) {
+  return players.filter(player => player.awards.filter(award => award.name === awardName).length === noOfTimes);
+}
 
-//Progression 10 - Sort players beloging to _____ team in descending order of awards won
+function createFormation(formation) {
+  if (formation.length === 0) {
+    return null;
+  }
 
-//Challenge 1 - Sort players that have won _______ award _____ times and belong to _______ country in alphabetical order of their names
+  return {
+    defender: formation[0],
+    midfield: formation[1],
+    forward: formation[2],
+  };
+}
 
-//Challenge 2 - Sort players that are older than _____ years in alphabetical order
-//Sort the awards won by them in reverse chronological order
+// Progression 7
+function filterByAwardxCountry(awardName, country) {
+  return filterByAward(awardName).filter(player => player.country === country);
+}
+
+// Progression 8
+function filterByNoOfAwardsxTeamxAge(noOfAwards, team, age) {
+  return players.filter(player => player.awards.length >= noOfAwards && player.team === team && player.age < age);
+}
+
+// Progression 9
+function sortByAge() {
+  return [...players].sort((a, b) => b.age - a.age);
+}
+
+// Progression 10
+function FilterByTeamxSortByNoOfAwards(team) {
+  const filteredPlayers = players.filter(player => player.team === team);
+  return filteredPlayers.sort((a, b) => b.awards.length - a.awards.length);
+}
+
+// Challenge 1
+function SortByNamexAwardxTimes(awardName, noOfTimes, country) {
+  const dataOne = filterByAwardxTimes(awardName, noOfTimes);
+  const dataTwo = dataOne.filter(player => player.country === country);
+  return dataTwo.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// Challenge 2
+function SortByNamexOlderThan(age) {
+  const data = players.filter(player => player.age > age);
+  return data.sort((a, b) => {
+    const awardsA = a.awards.map(award => award.year).sort((x, y) => y - x);
+    const awardsB = b.awards.map(award => award.year).sort((x, y) => y - x);
+    return a.name.localeCompare(b.name);
+  });
+}
